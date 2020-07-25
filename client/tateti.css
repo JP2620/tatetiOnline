@@ -1,0 +1,36 @@
+#tablero {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 50vh;
+  margin: 0px auto;
+}
+
+.tatetiRow {
+  display: flex;
+  flex-direction: row;
+  height: 33.3%;
+}
+
+.cell {
+  border: 0px;
+  height: 100%;
+  width: 33.3%;
+  font-size: 50px;
+  background-color: rgb(245, 216, 178);
+}
+
+.cell:hover {
+  background-color: burlywood;
+}
+
+
+#row1 {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.tatetiCol1 {
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
