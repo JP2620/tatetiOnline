@@ -14,8 +14,10 @@ window.onload = () => {
 
   let loading = document.getElementById("esperandoOponente");
   let botones = document.getElementsByClassName("cell");
-  let cartel = document.getElementById('viewFinPartida');
   let continuar = document.getElementById('continuarJuego');
+  let cartel = document.getElementById('viewFinPartida');
+  let cartelTitulo = document.getElementById('tituloFinPartida');
+  let cartelMensaje = document.getElementById('textoFinPartida');
 
   for (let boton of botones) {
     boton.addEventListener('click', () => {
@@ -56,7 +58,20 @@ window.onload = () => {
 
 
   socket.on('disconnect_rival', () => {
-    let cartel = document.getElementById('viewFinPartida');
+    cartelTitulo.textContent = "GANASTE";
+    cartelMensaje.textContent = "Se desconecto tu oponente.";
+    cartel.style.visibility = 'visible';
+  });
+
+  socket.on('perdioPartida', () => {
+    cartelTitulo.textContent = "PERDISTE";
+    cartelMensaje.textContent = "Inténtalo de nuevo.";
+    cartel.style.visibility = 'visible';
+  });
+
+  socket.on('ganoPartida', () => {
+    cartelTitulo.textContent = "GANASTE";
+    cartelMensaje.textContent = "Juega de nuevo.";
     cartel.style.visibility = 'visible';
   });
 
