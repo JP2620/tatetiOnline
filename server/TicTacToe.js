@@ -7,6 +7,7 @@ class TicTacToe {
   constructor(id_p1, id_p2) {
     this.p1 = id_p1;
     this.p2 = id_p2;
+    this.lastTurn = id_p2;
     this.tablero = [];
     for (let i = 0; i < SIZE; i++) {
       this.tablero.push([]);
@@ -20,8 +21,10 @@ class TicTacToe {
   mov(id_p, row, col) {
     console.log(id_p);
     console.log(this);
-    if (this.tablero[row][col] === VACIO) {
+    if (this.tablero[row][col] === VACIO 
+      && this.lastTurn !== id_p) {
       this.tablero[row][col] = id_p === this.p1? P1 : P2;
+      this.lastTurn = id_p;
     }
   }
 }
