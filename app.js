@@ -18,16 +18,7 @@ console.log("Running on port: " + PORT);
 var io = require('socket.io')(serv, {});
 io.sockets.on('connection', (socket) => {
 
-  if (!SOCKET_WAIT_Q.isEmpty()) {
-    let game = new TicTacToe(socket.id, SOCKET_WAIT_Q.dequeue());
-    console.log("Creando juego con: ", game.p1, game.p2);
-    io.sockets.connected[game.p1].emit("inicioPartida");
-    io.sockets.connected[game.p2].emit("inicioPartida");
-    io.sockets.connected[game.p1].game = game;
-    io.sockets.connected[game.p2].game = game;
-  } else {
-    SOCKET_WAIT_Q.enqueue(socket.id);
-  }
+  SOCKET_WAIT_Q.enqueue(socket.id);
 
   socket.on('movimiento', (data) => {
     if (io.sockets.connected[data.user_id].game) {
@@ -58,4 +49,16 @@ io.sockets.on('connection', (socket) => {
 
 });
 
+setInterval(crearGame, 100);
+
 function Queue() { var a = [], b = 0; this.getLength = function () { return a.length - b }; this.isEmpty = function () { return 0 == a.length }; this.enqueue = function (b) { a.push(b) }; this.dequeue = function () { if (0 != a.length) { var c = a[b]; 2 * ++b >= a.length && (a = a.slice(b), b = 0); return c } }; this.peek = function () { return 0 < a.length ? a[b] : void 0 } };
+function crearGame() {
+  if (SOCKET_WAIT_Q.getLength() > 1) {
+    let game = new TicTacToe(SOCKET_WAIT_Q.dequeue(), SOCKET_WAIT_Q.dequeue());
+    console.log("Creando juego con: ", game.p1, game.p2);
+    io.sockets.connected[game.p1].emit("inicioPartida");
+    io.sockets.connected[game.p2].emit("inicioPartida");
+    io.sockets.connected[game.p1].game = game;
+    io.sockets.connected[game.p2].game = game;
+  } 
+}
