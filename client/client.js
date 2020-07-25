@@ -5,7 +5,7 @@ let indexMatToArr = function(matriz, fila, columna) {
 }
 
 window.onload = () => {
-  socket = io.connect('http://localhost:2000');
+  socket = io.connect('https://tatetitest.herokuapp.com/:2000');
 
   let botones = document.getElementsByClassName("cell");
   for (let boton of botones) {
