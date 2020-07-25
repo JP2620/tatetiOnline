@@ -1,13 +1,22 @@
 var socket;
-
 let indexMatToArr = function(matriz, fila, columna) {
   return fila * matriz.length + columna;
 }
 
-window.onload = () => {
-  socket = io.connect('https://tatetitest.herokuapp.com/:2000');
+function resetearTablero(arrayDeCasillas) {
+  for (let boton of arrayDeCasillas) {
+    boton.textContent = '';
+  }
+}
 
+window.onload = () => {
+  socket = io.connect('http://localhost:2000');
+
+  let loading = document.getElementById("esperandoOponente");
   let botones = document.getElementsByClassName("cell");
+  let cartel = document.getElementById('viewFinPartida');
+  let continuar = document.getElementById('continuarJuego');
+
   for (let boton of botones) {
     boton.addEventListener('click', () => {
       let row = /(?<=row)\d+/g.exec(boton.parentElement.id);
@@ -20,7 +29,12 @@ window.onload = () => {
     });
   }
 
-
+  continuar.addEventListener('click', () => {
+    cartel.style.visibility = 'hidden';
+    loading.style.visibility = 'visible';
+    resetearTablero(botones);
+    socket.emit('jugarAgain');
+  });
 
   socket.on('updBoard', (board) => {
     for (let i = 0; i < board.length; i++) {
@@ -41,4 +55,12 @@ window.onload = () => {
   });
 
 
+  socket.on('disconnect_rival', () => {
+    let cartel = document.getElementById('viewFinPartida');
+    cartel.style.visibility = 'visible';
+  });
+
+  socket.on('inicioPartida', () => {
+    loading.style.visibility = "hidden";
+  });
 };

@@ -19,8 +19,8 @@ class TicTacToe {
   }
 
   mov(id_p, row, col) {
-    console.log(id_p);
-    console.log(this);
+    // console.log(id_p);
+    // console.log(this);
     if (this.tablero[row][col] === VACIO 
       && this.lastTurn !== id_p) {
       this.tablero[row][col] = id_p === this.p1? P1 : P2;
