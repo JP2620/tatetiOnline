@@ -1,5 +1,5 @@
 const TicTacToe = require('./server/TicTacToe.js');
-var PORT = 2000;
+var PORT = process.env.PORT || 5000;
 var express = require('express');
 var app = express();
 var serv = require('http').Server(app);
