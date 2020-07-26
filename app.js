@@ -6,7 +6,9 @@ var serv = require('http').Server(app);
 var SOCKET_WAIT_Q = new Queue();
 
 
-
+/**
+ * boilerplate
+ */
 app.get('', function (req, res) {
   res.sendFile(__dirname + '/client/index.html');
 });
@@ -18,7 +20,16 @@ console.log("Running on port: " + PORT);
 var io = require('socket.io')(serv, {});
 io.sockets.on('connection', (socket) => {
 
+  //Cuando se conecta lo agrega a la lista de espera
+
   SOCKET_WAIT_Q.enqueue(socket.id);
+
+  /**
+   * Si hace un movimiento, lo hace en el juego y chequea si termino,
+   * si termino les avisa si ganaron/perdieron y da por terminada la partida, 
+   * dandole un valor undefined
+   */
+
   socket.on('movimiento', (data) => {
     if (io.sockets.connected[data.user_id].game) {
       let game = io.sockets.connected[data.user_id].game;
@@ -29,8 +40,8 @@ io.sockets.on('connection', (socket) => {
         let perdedor = ganador === game.p1 ? game.p2 : game.p1;
         io.sockets.connected[ganador].emit('ganoPartida');
         io.sockets.connected[perdedor].emit('perdioPartida');
-        io.sockets.connected[ganador].emit('updBoard');
-        io.sockets.connected[perdedor].emit('updBoard');
+        io.sockets.connected[ganador].emit('updBoard', game.tablero);
+        io.sockets.connected[perdedor].emit('updBoard', game.tablero);
         io.sockets.connected[ganador].game = undefined;
         io.sockets.connected[perdedor].game = undefined;
       } 
@@ -44,6 +55,11 @@ io.sockets.on('connection', (socket) => {
     }
   });
 
+  /** 
+   * Si se desconectó y está en partida le avisa al otro jugador y da por terminada la partida
+   * sino, chequea si esta en la lista de espera y lo remueve
+   * */
+
   socket.on('disconnect', () => {
     console.log("Se desconecto alguien, quedan" + Object.keys(io.sockets.connected).length);
     if (socket.game) {
@@ -56,15 +72,23 @@ io.sockets.on('connection', (socket) => {
     }
   });
 
+  //Si quiere jugar de nuevo lo agrega a la cola de espera
   socket.on('jugarAgain', () => SOCKET_WAIT_Q.enqueue(socket.id));
 
 
 
 });
 
+/**
+ * Hace polling cada 100ms chequeando si crear partida
+ */
+
 setInterval(crearGame, 100);
 
-//function Queue() { var a = [], b = 0;this.getArray = function() {return a} ;this.getLength = function () { return a.length - b }; this.isEmpty = function () { return 0 == a.length }; this.enqueue = function (b) { a.push(b) }; this.dequeue = function () { if (0 != a.length) { var c = a[b]; 2 * ++b >= a.length && (a = a.slice(b), b = 0); return c } }; this.peek = function () { return 0 < a.length ? a[b] : void 0 } };
+/**
+ * Si hay mas de un socket esperando partida, saca 2 de la cola y los pone en la misma partida
+ * */
+
 function crearGame() {
   if (SOCKET_WAIT_Q.getLength() > 1) {
     let game = new TicTacToe(SOCKET_WAIT_Q.dequeue(), SOCKET_WAIT_Q.dequeue());
@@ -76,7 +100,7 @@ function crearGame() {
   } 
 }
 
-// Cola que no agrega repetidos
+// Cola que no agrega repetidos, porque no da jugar contra vos mismo
 function Queue(){
 
   // initialise the queue and offset

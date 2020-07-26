@@ -20,6 +20,11 @@ window.onload = () => {
   let cartelMensaje = document.getElementById('textoFinPartida');
 
   for (let boton of botones) {
+
+    /**
+     * Manda al server la posicion del boton para validarlo y 
+     * actualizar el estado del tablero
+     */
     boton.addEventListener('click', () => {
       let row = /(?<=row)\d+/g.exec(boton.parentElement.id);
       let column = /(?<=tatetiCol)\d+/g.exec(boton.classList[0]);
@@ -31,6 +36,10 @@ window.onload = () => {
     });
   }
 
+  /**
+   * Cuando clickea para continuar, le avisa al server
+   */
+
   continuar.addEventListener('click', () => {
     cartel.style.visibility = 'hidden';
     loading.style.visibility = 'visible';
@@ -38,6 +47,7 @@ window.onload = () => {
     socket.emit('jugarAgain');
   });
 
+  
   socket.on('updBoard', (board) => {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
