@@ -10,7 +10,7 @@ function resetearTablero(arrayDeCasillas) {
 }
 
 window.onload = () => {
-  socket = io.connect('http://localhost:2000');
+  socket = io.connect(document.location.protocol+'//'+document.location.host);
 
   let loading = document.getElementById("esperandoOponente");
   let botones = document.getElementsByClassName("cell");
