@@ -37,12 +37,12 @@ io.sockets.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
+    console.log("Se desconecto alguien, quedan" + Object.keys(io.sockets.connected).length);
     if (socket.game) {
       let idOtroP = socket.id === socket.game.p1? socket.game.p2 : socket.game.p1;
       let otroPlayer = io.sockets.connected[idOtroP];
       otroPlayer.emit('disconnect_rival');
       otroPlayer.game = undefined;
-      console.log(socket.game.tablero);
     } else if (SOCKET_WAIT_Q.getArray().includes(socket.id)) {
       let array = SOCKET_WAIT_Q.getArray();
       const index = array.indexOf(socket.id);

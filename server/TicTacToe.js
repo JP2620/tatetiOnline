@@ -20,6 +20,7 @@ class TicTacToe {
   }
 
   mov(id_p, row, col) {
+    //Chequea que la casilla esté vacía y sea su turno
     if (this.tablero[row][col] === VACIO 
       && this.lastTurn !== id_p) {
       this.tablero[row][col] = id_p === this.p1? P1 : P2;
@@ -55,7 +56,6 @@ class TicTacToe {
         && this.tablero[0][2] === this.tablero[1][1]
         && this.tablero[0][2] === this.tablero[2][0];
         
-      console.log(result1, result2);
       return result1 || result2;
     }
 
