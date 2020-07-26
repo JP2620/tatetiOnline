@@ -23,16 +23,24 @@ io.sockets.on('connection', (socket) => {
     if (io.sockets.connected[data.user_id].game) {
       let game = io.sockets.connected[data.user_id].game;
       game.mov(data.user_id, data.row, data.col);
+
       if (game.termino === true) {
         let ganador = game.lastTurn;
         let perdedor = ganador === game.p1 ? game.p2 : game.p1;
         io.sockets.connected[ganador].emit('ganoPartida');
         io.sockets.connected[perdedor].emit('perdioPartida');
-      }
-      io.sockets.connected[game.p1].emit('updBoard',
+        io.sockets.connected[ganador].emit('updBoard');
+        io.sockets.connected[perdedor].emit('updBoard');
+        io.sockets.connected[ganador].game = undefined;
+        io.sockets.connected[perdedor].game = undefined;
+      } 
+      
+      else {
+        io.sockets.connected[game.p1].emit('updBoard',
         game.tablero);
       io.sockets.connected[game.p2].emit('updBoard',
         game.tablero);
+      }
     }
   });
 
