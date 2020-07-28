@@ -73,9 +73,10 @@ header {
 }
 
  header a, header button, header p {
-  color: whitesmoke;
+  color: white;
   text-decoration: none;
 }
+
 
 #logo {
   font-size: x-large;
@@ -112,6 +113,14 @@ button:hover {
   background-color: rgba(48, 159, 173, 0.8);
 }
 
-#jsContainer {
-  text-align: center;
+.row {
+  display: flex;
+  height: 50vh;
+  justify-content: space-evenly;
 }
+
+.columna {
+  width: 35%;
+  border: black solid 2px;
+}
+

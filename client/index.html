@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link type="text/css" rel="stylesheet" href="vanilla.css" charset="utf-8">
   <link type="text/css" rel="stylesheet" href="tateti.css" charset="utf-8">
+  <link type="text/css" rel="stylesheet" href="chat.css" charset="utf-8">
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script src="client.js"></script>
   <title>Test</title>
@@ -31,33 +32,45 @@
   <main>
     <div id="content">
       <h1>TaTeTi</h1>
-
       <div class="loading" id="esperandoOponente">
         <p>Buscando oponente</p>
         <span></span>
         <span></span>
         <span></span>
       </div>
+      <div class="row">
+        <div class="columna" id="tablero">
+          <div class="tatetiRow" id="row0">
+            <button class="tatetiCol0 cell"></button>
+            <button class="tatetiCol1 cell"></button>
+            <button class="tatetiCol2 cell"></button>
+          </div>
+          <div class="tatetiRow" id="row1">
+            <button class="tatetiCol0 cell"></button>
+            <button class="tatetiCol1 cell"></button>
+            <button class="tatetiCol2 cell"></button>
+          </div>
+          <div class="tatetiRow" id="row2">
+            <button class="tatetiCol0 cell"></button>
+            <button class="tatetiCol1 cell"></button>
+            <button class="tatetiCol2 cell"></button>
+          </div>
 
-      <div id="tablero">
-        <div class="tatetiRow" id="row0">
-          <button class="tatetiCol0 cell"></button>
-          <button class="tatetiCol1 cell"></button>
-          <button class="tatetiCol2 cell"></button>
         </div>
-        <div class="tatetiRow" id="row1">
-          <button class="tatetiCol0 cell"></button>
-          <button class="tatetiCol1 cell"></button>
-          <button class="tatetiCol2 cell"></button>
+        <div class="chat columna" id="chatContainer">
+          <div id="msgContainer"></div>
+          <div id="inputContainer">
+            <input class="chatInput" id="chatFrom" placeholder="  Nombre">
+            <input class="chatInput" id="chatMsg" placeholder="  Envía un mensaje">
+            <button id="sendMsg">Enviar</button>
+          </div>
         </div>
-        <div class="tatetiRow" id="row2">
-          <button class="tatetiCol0 cell"></button>
-          <button class="tatetiCol1 cell"></button>
-          <button class="tatetiCol2 cell"></button>
-        </div>
+        <script src="chat.js"></script>
       </div>
+
     </div>
   </main>
+
 
   <footer>
     <p id="footerText">
