@@ -22,6 +22,7 @@ io.sockets.on('connection', (socket) => {
 
   //Cuando se conecta lo agrega a la lista de espera
 
+  console.log(socket.id);
   SOCKET_WAIT_Q.enqueue(socket.id);
 
   /**
@@ -31,7 +32,9 @@ io.sockets.on('connection', (socket) => {
    */
 
   socket.on('movimiento', (data) => {
+    console.log("se ejecuta movimiento");
     if (io.sockets.connected[data.user_id].game) {
+      console.log("el socket esta en la lista de conectados");
       let game = io.sockets.connected[data.user_id].game;
       game.mov(data.user_id, data.row, data.col);
 
@@ -75,7 +78,9 @@ io.sockets.on('connection', (socket) => {
   //Si quiere jugar de nuevo lo agrega a la cola de espera
   socket.on('jugarAgain', () => SOCKET_WAIT_Q.enqueue(socket.id));
 
-
+  socket.on('chatMsg', (data)=> {
+    socket.broadcast.emit('chatBroadcast', data);
+  });
 
 });
 

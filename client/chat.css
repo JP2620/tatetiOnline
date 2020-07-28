@@ -7,11 +7,19 @@
 }
 
 #msgContainer {
+  overflow-y: auto;
   margin-left: 15px;
   margin-right: 15px;
   border: black solid 2px;
   height: 60%;
   background-color: white;
+  text-align: justify;
+}
+
+#msgContainer p {
+  margin: 0px;
+  height: fit-content;
+  border-bottom: 1px solid grey;
 }
 
 #inputContainer {
