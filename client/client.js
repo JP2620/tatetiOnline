@@ -103,7 +103,7 @@ window.onload = () => {
 
   socket.on('chatBroadcast', (data) => {
     if (!(data.remitente === '' || data.mensaje === '')) {
-      msgWindow.innerHTML += '<p><b>'+data.remitente+': </b>'+data.mensaje+'</p>';
+      msgWindow.innerHTML += '<p><b>'+data.remitente+' : </b>'+data.mensaje+'</p>';
     }
     console.log(data);
   });

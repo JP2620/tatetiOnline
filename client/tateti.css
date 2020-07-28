@@ -1,7 +1,6 @@
 #tablero {
   display: flex;
   flex-direction: column;
-  width: 50%;
   height: 50vh;
   margin: 0px;
 }

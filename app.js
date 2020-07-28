@@ -1,4 +1,4 @@
-const TicTacToe = require('./server/TicTacToe.js');
+const Partida = require('./server/Partida');
 var PORT = process.env.PORT || 5000;
 var express = require('express');
 var app = express();
@@ -22,7 +22,6 @@ io.sockets.on('connection', (socket) => {
 
   //Cuando se conecta lo agrega a la lista de espera
 
-  console.log(socket.id);
   SOCKET_WAIT_Q.enqueue(socket.id);
 
   /**
@@ -32,10 +31,8 @@ io.sockets.on('connection', (socket) => {
    */
 
   socket.on('movimiento', (data) => {
-    console.log("se ejecuta movimiento");
-    if (io.sockets.connected[data.user_id].game) {
-      console.log("el socket esta en la lista de conectados");
-      let game = io.sockets.connected[data.user_id].game;
+    if (socket.partida) {
+      let game = socket.partida.game;
       game.mov(data.user_id, data.row, data.col);
 
       if (game.termino === true) {
@@ -43,17 +40,13 @@ io.sockets.on('connection', (socket) => {
         let perdedor = ganador === game.p1 ? game.p2 : game.p1;
         io.sockets.connected[ganador].emit('ganoPartida');
         io.sockets.connected[perdedor].emit('perdioPartida');
-        io.sockets.connected[ganador].emit('updBoard', game.tablero);
-        io.sockets.connected[perdedor].emit('updBoard', game.tablero);
-        io.sockets.connected[ganador].game = undefined;
-        io.sockets.connected[perdedor].game = undefined;
+        io.sockets.in(socket.partida.room).emit('updBoard', game.tablero);
+        io.sockets.connected[ganador].partida = undefined;
+        io.sockets.connected[perdedor].partida = undefined;
       } 
       
       else {
-        io.sockets.connected[game.p1].emit('updBoard',
-        game.tablero);
-      io.sockets.connected[game.p2].emit('updBoard',
-        game.tablero);
+        io.sockets.in(socket.partida.room).emit('updBoard', game.tablero);
       }
     }
   });
@@ -65,11 +58,11 @@ io.sockets.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log("Se desconecto alguien, quedan" + Object.keys(io.sockets.connected).length);
-    if (socket.game) {
-      let idOtroP = socket.id === socket.game.p1? socket.game.p2 : socket.game.p1;
+    if (socket.partida) {
+      let idOtroP = socket.id === socket.partida.game.p1? socket.partida.game.p2 : socket.partida.game.p1;
       let otroPlayer = io.sockets.connected[idOtroP];
       otroPlayer.emit('disconnect_rival');
-      otroPlayer.game = undefined;
+      otroPlayer.partida = undefined;
     } else if (SOCKET_WAIT_Q.includes(socket.id)) {
       SOCKET_WAIT_Q.remove(socket.id);
     }
@@ -79,7 +72,10 @@ io.sockets.on('connection', (socket) => {
   socket.on('jugarAgain', () => SOCKET_WAIT_Q.enqueue(socket.id));
 
   socket.on('chatMsg', (data)=> {
-    socket.broadcast.emit('chatBroadcast', data);
+    if (socket.partida){
+      console.log(data.remitente + "  " + data.mensaje);
+      io.sockets.in(socket.partida.room).emit('chatBroadcast', data);
+    }
   });
 
 });
@@ -88,20 +84,23 @@ io.sockets.on('connection', (socket) => {
  * Hace polling cada 100ms chequeando si crear partida
  */
 
-setInterval(crearGame, 100);
+setInterval(crearPartida, 100);
 
 /**
  * Si hay mas de un socket esperando partida, saca 2 de la cola y los pone en la misma partida
  * */
 
-function crearGame() {
+function crearPartida() {
   if (SOCKET_WAIT_Q.getLength() > 1) {
-    let game = new TicTacToe(SOCKET_WAIT_Q.dequeue(), SOCKET_WAIT_Q.dequeue());
-    console.log("Creando juego con: ", game.p1, game.p2);
-    io.sockets.connected[game.p1].emit("inicioPartida");
-    io.sockets.connected[game.p2].emit("inicioPartida");
-    io.sockets.connected[game.p1].game = game;
-    io.sockets.connected[game.p2].game = game;
+    let p1 = io.sockets.connected[SOCKET_WAIT_Q.dequeue()];
+    let p2 = io.sockets.connected[SOCKET_WAIT_Q.dequeue()];
+    let partida = new Partida(p1.id, p2.id);
+    console.log("Creando juego con: ", p1.id, p2.id);
+    p1.join(partida.room);
+    p2.join(partida.room);
+    io.sockets.in(partida.room).emit("inicioPartida");
+    p1.partida = partida;
+    p2.partida = partida;
   } 
 }
 
