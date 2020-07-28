@@ -16,7 +16,6 @@ class TicTacToe {
         this.tablero[i].push(VACIO);
       }
     }
-    console.log(this.tablero);
   }
 
   mov(id_p, row, col) {
