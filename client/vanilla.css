@@ -15,10 +15,14 @@ body {
 
 /* content */
 
+main {
+  min-height: 100vh;
+}
+
 @media (min-width: 992px) {
   main {
     width: 70vw;
-    padding: 70px 0 75px 0;
+    padding: 20px 0 95px 0;
     margin: 0px auto;
   }
 }
@@ -30,10 +34,11 @@ footer {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+
   position: absolute;
-  bottom: 0;
-  height: 60px;
+  bottom: 0px;
   margin-top: 60px;
+  height: 60px;
   min-width: 100%;
   background-color: rgba(67, 70, 75,1);
 }
