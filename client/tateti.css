@@ -38,13 +38,32 @@
 
 .tatetiRow {
   display: grid;
-  grid-template-columns: repeat(3, 33vw);
+  grid-template-columns: repeat(3, 33.3vw);
 }
 
 @media (min-width: 768px) {
   .tatetiRow {
     grid-template-columns: repeat(3, 200px);  
   }
+}
+
+/* decoracion tablero */
+.cell {
+  border: none;
+  font-size: 6rem;
+}
+
+.cell:hover {
+  background-color: rgb(48, 159, 173);
+}
+.tatetiCol1 {
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+
+#row1 {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
 }
 
 
