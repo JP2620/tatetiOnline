@@ -24,21 +24,36 @@
 </head>
 
 <body>
-
-
-  <header>
-    <p id="logo">JP</p>
-    <nav>
-      <ul class="nav_links">
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">About</a></li>
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a id="logo" class="navbar-brand ml-2" href="#">JP</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto d-flex align-items-center">
+        <li class="nav-item pr-md-4">
+          <a class="nav-link" href="#">Projects<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item pr-md-5">
+          <a class="nav-link" href="#">Services</a>
+        </li>
+        <li class="nav-item pr-md-5">
+          <a class="nav-link" href="#">About</a>
+        </li>
       </ul>
-    </nav>
-    <form>
-      <button id="navButton" formaction="#">Contact</button>
-    </form>
-  </header>
+    </div>
+  </nav>
+
+  <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <p class="navbar-brand" id="logo">JP</p>
+    <ul class="">
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <button id="navButton" formaction="#">Contact</button>
+  </nav> -->
 
   <main>
     <div id="content">
@@ -66,7 +81,7 @@
           <button class="tatetiCol2 cell"></button>
         </div> -->
 
-        <!-- <div class="container chat col-xs-12 col-sm-12 col-md-5 col-lg-5 my-4" id="chatContainer">
+      <!-- <div class="container chat col-xs-12 col-sm-12 col-md-5 col-lg-5 my-4" id="chatContainer">
           <div id="msgContainer"></div>
           <div id="row d-flex inputContainer">
             <input class="chatInput" id="chatFrom" placeholder="  Nombre">
@@ -74,19 +89,19 @@
             <button id="sendMsg">Enviar</button>
           </div>
         </div> -->
-        <!-- <script src="chat.js"></script> -->
-      </div>
+      <!-- <script src="chat.js"></script> -->
+      <!-- </div> -->
 
     </div>
   </main>
 
 
-  <footer>
+  <!-- <footer>
     <p id="footerText">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim quaerat voluptas tempore. Hic ab quibusdam non,
       possimus officiis fugiat? Soluta ad nostrum cupiditate error facere dicta laborum inventore, quia in?
     </p>
-  </footer>
+  </footer> -->
 
   <div class="cartelFinPartida" id='viewFinPartida'>
     <div class="msgContainer">

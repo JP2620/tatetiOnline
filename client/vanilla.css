@@ -11,12 +11,13 @@ body {
   position: relative;
   min-height: 100vh;
   background-color:whitesmoke;
-
 }
+
+
 
 /* content */
 
-main {
+/* main {
   padding: 70px 0 75px 0;
   background-color:whitesmoke;
   width: 70%;
@@ -38,11 +39,11 @@ main h1 {
 main p {
   margin: 20px 0px;
   padding: 0 5%;
-}
+} */
 
 /* footer */
 
-footer {
+/* footer {
   position: absolute;
   bottom: 0;
   min-height: 75px;
@@ -58,69 +59,19 @@ footer>p#footerText {
   padding: 0 18%;
   text-align: center;
   color: whitesmoke;
-}
+} */
 
 /* navbar */
+@media (min-width: 992px) {
+  #logo {
+    position: absolute;
+    float: left;
+  }
 
-header {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  height: 70px;
-  background-color: rgb(67, 70, 75);
+  #logo {
+    font-size: x-large;
+    font-weight: 700;
+  }
 }
 
- header a, header button, header p {
-  color: white;
-  text-decoration: none;
-}
-
-
-#logo {
-  font-size: x-large;
-  font-weight: 800;
-}
-
-.nav_links {
-  list-style: none;
-}
-
-.nav_links li {
-  display: inline-block;
-  padding: 0 20px;
-}
-
-.nav_links li a {
-  transition: all 0.3s ease 0s;
-}
-
-.nav_links li a:hover {
-  color: rgb(48, 159, 173);
-}
-
-#navButton {
-  padding: 9px 25px;
-  background-color: rgb(48, 159, 173);
-  border: none;
-  border-radius: 75px;
-  cursor: pointer;
-  transition: all 0.3s ease 0s;
-}
-
-button:hover {
-  background-color: rgba(48, 159, 173, 0.8);
-}
-
-.row {
-  display: flex;
-  height: 50vh;
-  justify-content: space-evenly;
-}
-
-.columna {
-  width: 35%;
-  border: black solid 2px;
-}
 
