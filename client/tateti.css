@@ -29,16 +29,23 @@
 
 #tablero {
   display: grid;
+  width: 100%;
+  height: 70vh;
   justify-items: center;
-  grid-template-rows: repeat(3, minmax(33vw, 200px));
+  grid-template-rows: repeat(3,  1fr);
 
 }
 
 .tatetiRow {
   display: grid;
-  grid-template-columns: repeat(3, minmax(33vw, 150px));
+  grid-template-columns: repeat(3, 33vw);
 }
 
+@media (min-width: 768px) {
+  .tatetiRow {
+    grid-template-columns: repeat(3, 200px);  
+  }
+}
 
 
 .cartelFinPartida {
