@@ -70,14 +70,6 @@ io.sockets.on('connection', (socket) => {
 
   //Si quiere jugar de nuevo lo agrega a la cola de espera
   socket.on('jugarAgain', () => SOCKET_WAIT_Q.enqueue(socket.id));
-
-  socket.on('chatMsg', (data)=> {
-    if (socket.partida){
-      console.log(data.remitente + "  " + data.mensaje);
-      io.sockets.in(socket.partida.room).emit('chatBroadcast', data);
-    }
-  });
-
 });
 
 /**
