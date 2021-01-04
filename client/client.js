@@ -13,9 +13,6 @@ window.onload = () => {
   socket = io.connect(document.location.protocol+'//'+document.location.host);
 
   let msgWindow = document.getElementById('msgContainer');
-  let sendBtn = document.getElementById('sendMsg');
-  let remitente = document.getElementById('chatFrom');
-  let mensaje = document.getElementById('chatMsg');
   let loading = document.getElementById("esperandoOponente");
   let botones = document.getElementsByClassName("cell");
   let continuar = document.getElementById('continuarJuego');
@@ -93,18 +90,4 @@ window.onload = () => {
     loading.style.visibility = "hidden";
   });
 
-  sendBtn.addEventListener('click', () => {
-    socket.emit('chatMsg', {
-      remitente: remitente.value,
-      mensaje: mensaje.value
-    });
-    console.log(socket.id);
-  });
-
-  socket.on('chatBroadcast', (data) => {
-    if (!(data.remitente === '' || data.mensaje === '')) {
-      msgWindow.innerHTML += '<p><b>'+data.remitente+' : </b>'+data.mensaje+'</p>';
-    }
-    console.log(data);
-  });
 };
